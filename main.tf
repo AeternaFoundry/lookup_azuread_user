@@ -6,5 +6,12 @@ data "azuread_user" "user_lookup" {
   mail_nickname       = each.value.mail_nickname
   object_id           = each.value.object_id
   user_principal_name = each.value.user_principal_name
+
+  dynamic "timeouts" {
+    for_each = each.value.timeouts != null ? [each.value.timeouts] : []
+    content {
+      read = timeouts.value.read
+    }
+  }
 }
 
